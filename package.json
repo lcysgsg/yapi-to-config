@@ -1,6 +1,6 @@
 {
   "name": "yapi-to-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "思路就是拿它接口给的数据，拼接出一份自己用的配置",
   "author": "lcysgsg",
   "license": "ISC",
@@ -29,9 +29,5 @@
   },
   "files": [
     "index.js"
-  ],
-  "yapi": {
-    "host": "http://192.168.2.18:3000",
-    "token": "61c7de9df7ce219f29cfbf68d36cb20f9ac647db150cda9f594df7075b15d23b"
-  }
+  ]
 }
