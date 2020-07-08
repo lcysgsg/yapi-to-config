@@ -58,7 +58,7 @@ function getPkgJson (opt) {
 }
 
 const pkgJson = getPkgJson()
-const outputDir = pkgJson.yapi.outputDir && path.resolve(__dirname, pkgJson.yapi.outputDir)
+const outputDir = pkgJson.yapi.outputDir && path.resolve(process.cwd(), pkgJson.yapi.outputDir)
 
 const OPTIONS = {
   // host 是 yapi 的地址
