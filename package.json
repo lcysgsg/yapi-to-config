@@ -4,6 +4,10 @@
   "description": "思路就是拿它接口给的数据，拼接出一份自己用的配置",
   "author": "lcysgsg",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcysgsg/yapi-to-config.git"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "fs-extra": "^9.0.1"
