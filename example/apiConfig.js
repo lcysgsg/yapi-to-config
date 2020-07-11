@@ -605,5 +605,21 @@ export default {
       method: "POST",
       url: "/v1/manage/desktop/update",
     },
+
+    // 【删除】取消桌面应用
+    // doc: http://192.168.2.18:3000/project/141/interface/api/9965
+    {
+      funcName: "desktop_delete",
+      method: "POST",
+      url: "/v1/manage/desktop/delete",
+    },
+
+    // 【删除】取消桌面应用
+    // doc: http://192.168.2.18:3000/project/141/interface/api/9971
+    {
+      funcName: "desktop_delete",
+      method: "GET",
+      url: "/v1/manage/desktop/delete",
+    },
   ],
 }
