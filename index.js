@@ -117,7 +117,8 @@ function generateJsApiContent (source) {
     return result
   }
 
-  let fileContent = "export default {"
+  let fileContent = `/* eslint-disable */
+export default {`
   source.forEach((module) => {
     if (module.list.length === 0) return
     // "/api/Advise/update" => "Advise"
