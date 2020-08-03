@@ -1,0 +1,117 @@
+{
+  "errcode": 0,
+  "errmsg": "成功！",
+  "data": [
+    {
+      "index": 0,
+      "_id": 1097,
+      "name": "公共分类",
+      "project_id": 141,
+      "desc": "空的组，会被过滤",
+      "uid": 23,
+      "add_time": 1591426989,
+      "up_time": 1591426989,
+      "__v": 0,
+      "list": []
+    },
+    {
+      "index": 0,
+      "_id": 1307,
+      "name": "资讯",
+      "project_id": 141,
+      "desc": "资讯模块",
+      "uid": 84,
+      "add_time": 1594797341,
+      "up_time": 1594797341,
+      "__v": 0,
+      "list": [
+        {
+          "edit_uid": 0,
+          "status": "undone",
+          "index": 0,
+          "tag": [],
+          "_id": 10355,
+          "method": "GET",
+          "title": "【列表】获取资讯列表",
+          "path": "/v1/Article/query",
+          "project_id": 141,
+          "catid": 1307,
+          "uid": 84,
+          "add_time": 1594797342,
+          "up_time": 1596000159
+        }
+      ]
+    },
+    {
+      "index": 0,
+      "_id": 1325,
+      "name": "浏览历史",
+      "project_id": 141,
+      "desc": "浏览历史模块",
+      "uid": 84,
+      "add_time": 1594804999,
+      "up_time": 1594804999,
+      "__v": 0,
+      "list": [
+        {
+          "edit_uid": 0,
+          "status": "undone",
+          "index": 0,
+          "tag": [],
+          "_id": 10397,
+          "method": "GET",
+          "title": "【列表】获取资讯列表（浏览历史中的 Article 会被合入 Article 对象）",
+          "path": "/v1/Article/query_category",
+          "project_id": 141,
+          "catid": 1307,
+          "uid": 84,
+          "add_time": 1594799030,
+          "up_time": 1596000159
+        },
+        {
+          "edit_uid": 0,
+          "status": "undone",
+          "index": 0,
+          "tag": [],
+          "_id": 10439,
+          "method": "GET",
+          "title": "【列表】获取浏览历史列表",
+          "path": "/v1/History/query",
+          "project_id": 141,
+          "catid": 1325,
+          "uid": 84,
+          "add_time": 1594804999,
+          "up_time": 1596000159
+        }
+      ]
+    },
+    {
+      "index": 0,
+      "_id": 1727,
+      "name": "潇洒泊车",
+      "project_id": 141,
+      "desc": "潇洒泊车",
+      "uid": 23,
+      "add_time": 1596000158,
+      "up_time": 1596000158,
+      "__v": 0,
+      "list": [
+        {
+          "edit_uid": 0,
+          "status": "undone",
+          "index": 0,
+          "tag": [],
+          "_id": 13565,
+          "method": "POST",
+          "title": "【查看】查看泊车员信息",
+          "path": "/v1/Valet/User/read",
+          "project_id": 141,
+          "catid": 1727,
+          "uid": 23,
+          "add_time": 1596000161,
+          "up_time": 1596000161
+        }
+      ]
+    }
+  ]
+}
