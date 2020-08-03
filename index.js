@@ -154,8 +154,7 @@ function generateJsApiContent (source) {
 
   let fileContent = `
       /* eslint-disable */
-        export default {
-          yapi: [
+        export default [
     `
   for (const fileName in symbolSource) {
     const module = symbolSource[fileName]
@@ -174,7 +173,7 @@ function generateJsApiContent (source) {
       ${genrSingleConent(module.list)}
     `
   }
-  fileContent += "]}"
+  fileContent += "]"
   return fileContent
 }
 
