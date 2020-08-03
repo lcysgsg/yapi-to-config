@@ -119,8 +119,8 @@ function generateJsApiContent (source) {
     let result = ""
     list.forEach((item) => {
       // 函数名最少由两个词组成， 上不封顶
-      const funcNameWordNum = item.path.split("/").length <= 4 ? -2 : 2
-      const funcName = reservedWord(getPathWords(item.path, funcNameWordNum))
+      // const funcNameWordNum = item.path.split("/").length <= 3 ? -2 : 2
+      const funcName = reservedWord(getPathWords(item.path, 1))
       result += `
           // ${item.title}
           // doc: ${OPTIONS.host}/project/${item.project_id}/interface/api/${item._id}
