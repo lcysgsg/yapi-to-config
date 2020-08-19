@@ -1,0 +1,7 @@
+{
+  "yapi": {
+    "host": "http://192.168.2.18:3000",
+    "token": "61c7de9df7ce219f29cfbf68d36cb20f9ac647db150cda9f594df7075b15d23b",
+    "outputDir": "./"
+  }
+}

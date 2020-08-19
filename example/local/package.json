@@ -1,0 +1,6 @@
+{
+  "yapi": {
+    "localFilePath": "../../mock/listMenu.json",
+    "outputDir": "./"
+  }
+}
