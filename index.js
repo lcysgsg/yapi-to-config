@@ -2,6 +2,12 @@ const fs = require("fs-extra")
 const axios = require("axios")
 const path = require("path")
 const prettier = require("prettier")
+const chalk = require("chalk")
+const log = console.log
+
+function isFile (path) {
+  return fs.existsSync(path) && fs.statSync(path).isFile()
+}
 
 /**
  * Find the closest package.json file, starting at process.cwd (by default),
@@ -20,6 +26,25 @@ function findPackageJson (startDir) {
       continue
     }
     return pkgFile
+  } while (dir !== path.resolve(dir, ".."))
+  return null
+}
+
+/**
+  * fork from findPackageJson，get package.json dir
+  * @returns {string}  Absolute path to closest package.json file dir
+  */
+function findPackageJsonDir (startDir) {
+  let dir = path.resolve(startDir || process.cwd())
+
+  do {
+    const pkgFile = path.join(dir, "package.json")
+
+    if (!fs.existsSync(pkgFile) || !fs.statSync(pkgFile).isFile()) {
+      dir = path.join(dir, "..")
+      continue
+    }
+    return dir
   } while (dir !== path.resolve(dir, ".."))
   return null
 }
@@ -62,27 +87,30 @@ function getPkgJson (opt) {
   return fileJson
 }
 
+const pkgJsonDir = findPackageJsonDir()
 const pkgJson = getPkgJson()
-const outputDir =
-  pkgJson.yapi.outputDir && path.resolve(process.cwd(), pkgJson.yapi.outputDir)
 
 const OPTIONS = {
   // host 是 yapi 的地址
   host: pkgJson.yapi.host,
   // 获取新项目接口一般就是改 token，
   token: pkgJson.yapi.token,
-  // projectId: 141, // 基本没用上过
   path: pkgJson.yapi.path || "/api/interface/list_menu",
-  // 默认生成到执行目录下
-  outputDir: outputDir || path.resolve(process.cwd()),
+
+  // 直接使用数据文件。如果有该字段，会直接使用， 不再请求 yapi 接口。
+  // 数据文件地址, 相对于 package.json
+  localFilePath: pkgJson.yapi.localFilePath || null,
+
+  // 相对于 package.json，默认生成到 pkg 同级目录下
+  outputDir: (function () {
+    if (pkgJson.yapi.outputDir) {
+      return path.join(pkgJsonDir, pkgJson.yapi.outputDir)
+    } else {
+      return path.join(pkgJsonDir, "./")
+    }
+  }()),
   fileName: pkgJson.yapi.fileName || "apiConfig",
 }
-
-// const data = require("./mock/listMenu.json")
-// fs.writeFile(
-//   `${OPTIONS.outputDir}/${OPTIONS.fileName}.js`,
-//   prettier.format(generateJsApiContent(data.data), { parser: "babel" })
-// )
 
 handleSrouce()
 
@@ -91,22 +119,39 @@ handleSrouce()
  * @param {array} source yapi源数据
  */
 function handleSrouce () {
-  // console.log(`┗|｀O′|┛ 先清一波旧数据 ${OPTIONS.outputDir}`)
-  console.log(`┗|｀O′|┛  ${OPTIONS.host}${OPTIONS.path}?token=${OPTIONS.token}`)
-  axios
-    .get(`${OPTIONS.host}${OPTIONS.path}?token=${OPTIONS.token}`)
-    .then((res) => {
-      // 可参考 ./listMenu.json
-      const result = res.data
-      const source = result.data
+  // log(`┗|｀O′|┛ 先清一波旧数据 ${OPTIONS.outputDir}`)
+  let url = ""
+  const gen = function (source) {
+    fs.ensureDir(OPTIONS.outputDir, function () {
       fs.writeFile(
         `${OPTIONS.outputDir}/${OPTIONS.fileName}.js`,
         prettier.format(generateJsApiContent(source), { parser: "babel" })
       )
-      console.log(
-        `┗|｀O′|┛  ${path.resolve(OPTIONS.outputDir, OPTIONS.fileName)}.js `
-      )
+      log(`┗|｀O′|┛ 写入 ${path.resolve(OPTIONS.outputDir, OPTIONS.fileName)}.js `)
     })
+  }
+  if (OPTIONS.localFilePath) {
+    url = path.join(pkgJsonDir, OPTIONS.localFilePath)
+    if (!isFile(url)) {
+      log(chalk.red(`ERR! package.json yapi.localFilePath is not a file. path.resolve: ${url}. `))
+      return false
+    }
+
+    const result = JSON.parse(fs.readFileSync(url, "utf8"))
+    const source = result.data
+    gen(source)
+  } else {
+    url = `${OPTIONS.host}${OPTIONS.path}?token=${OPTIONS.token}`
+    log(`┗|｀O′|┛  ${url}`)
+    axios
+      .get(url)
+      .then((res) => {
+      // 可参考 ./listMenu.json
+        const result = res.data
+        const source = result.data
+        gen(source)
+      })
+  }
 }
 
 /**
