@@ -228,7 +228,7 @@ class Main {
   getPathWords (path, sliceIdx, divider = "_") {
   // 如果带域名，就截取后面的路径
     if (validator.isURL(path)) {
-      path.replace(/.*\/\/.*?\//, "")
+      path = path.replace(/.*\/\/.*?\//, "")
     }
 
     // 统一成方便处理的模样 /v1/Advise/update => v1/Advise/update
