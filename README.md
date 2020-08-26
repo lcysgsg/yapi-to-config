@@ -30,16 +30,20 @@ export default [
 
 使用 npm:
 
-`$ npm install --save-dev yapi-to-config`
+`$ npm install -D yapi-to-config`
 
 使用 yarn:
 
-`$ yarn add --save-dev yapi-to-config`
+`$ yarn add -D yapi-to-config`
+
+更新:
+
+`$ yarn upgrade yapi-to-config --latest`
 
 ## 配置
 
 ```jsonc
-// packge.json
+// package.json
 {
     // ...,
     "yapi": {
