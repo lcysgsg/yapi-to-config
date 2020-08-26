@@ -84,7 +84,7 @@ $ npm run yapi
 
 ### v2.3.0
 
-- 支持 yapi 多项目导入了，参考 [example/apiMulti](./tree/master/example/apiMulti)
+- 支持 yapi 多项目导入了，参考 [example/apiMulti](https://github.com/lcysgsg/yapi-to-config/tree/master/example/apiMulti)
 - 重构了代码
 - 修复了 [当 /\/$/ 时， funcName 拼接出了多余的下划线 issues#2](https://github.com/lcysgsg/yapi-to-config/issues/2)
 - 现在 yapi 配置的 `url` 能传入完整的链接了
