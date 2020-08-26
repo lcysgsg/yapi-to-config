@@ -82,6 +82,13 @@ $ npm run yapi
 
 ## 更新日志
 
+### v2.3.0
+
+- 支持 yapi 多项目导入了，参考 [example/apiMulti](./tree/master/example/apiMulti)
+- 重构了代码
+- 修复了 [当 /\/$/ 时， funcName 拼接出了多余的下划线 issues#2](https://github.com/lcysgsg/yapi-to-config/issues/2)
+- 现在 yapi 配置的 `url` 能传入完整的链接了
+
 ### v2.2.1
 
 - 支持根据本地文件生成， 目录结构暂时仅支持类似 `/mock/listMenu.json`
