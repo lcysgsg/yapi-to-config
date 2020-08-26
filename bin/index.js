@@ -1,2 +1,3 @@
 #!/usr/bin/env node
-require("../index")
+const i = require("../index")
+i.run()
