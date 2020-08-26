@@ -39,6 +39,21 @@
           "uid": 84,
           "add_time": 1594797342,
           "up_time": 1596000159
+        },
+        {
+          "edit_uid": 0,
+          "status": "undone",
+          "index": 0,
+          "tag": [],
+          "_id": 10355,
+          "method": "GET",
+          "title": "带域名的接口",
+          "path": "https://baidu.com/v1/Article/query",
+          "project_id": 141,
+          "catid": 1307,
+          "uid": 84,
+          "add_time": 1594797342,
+          "up_time": 1596000159
         }
       ]
     },

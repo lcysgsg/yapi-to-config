@@ -15,6 +15,14 @@ export default [
     url: "/v1/Article/query",
   },
 
+  // 带域名的接口
+  // doc: undefined/project/141/interface/api/10355
+  {
+    funcName: "Article_query",
+    method: "GET",
+    url: "https://baidu.com/v1/Article/query",
+  },
+
   // 【列表】获取资讯列表
   // doc: undefined/project/141/interface/api/10397
   {
