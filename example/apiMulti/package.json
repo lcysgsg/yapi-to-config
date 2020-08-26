@@ -1,0 +1,16 @@
+{
+  "yapi": [
+    {
+      "host": "http://192.168.2.18:3000",
+      "token": "7373f15acad0a3eff31e43963b75e5cf6f0266470f3e683097c92d2d4e53937d",
+      "outputDir": "./",
+      "fileName": "apiConfig"
+    },
+    {
+      "host": "http://192.168.2.18:3000",
+      "token": "479d5ac3c6edc3b38b8a81a625758412646b933da9f25eb3fda2f664bc96ab65",
+      "outputDir": "./",
+      "fileName": "apiConfig2"
+    }
+  ]
+}
