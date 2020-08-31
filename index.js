@@ -232,9 +232,9 @@ class Main {
     }
 
     // 统一成方便处理的模样 /v1/Advise/update => v1/Advise/update
-    path = path[0] === "/" ? path.replace("/", "") : path
+    path = path[0] === "/" ? path.substr(1) : path
     // 统一成方便处理的模样 v1/Advise/update/ => v1/Advise/update
-    path = path[path.length - 1] === "/" ? path.replace("/", "") : path
+    path = path[path.length - 1] === "/" ? path.substr(0, path.length - 1) : path
     const arr = path.split("/")
     let startIndex = sliceIdx
     let endIndex = arr.length
