@@ -57,23 +57,23 @@ function findPackageJsonDir (startDir) {
  * @returns {Object}                      A object from package.json
  */
 function getPkgJson (opt) {
-  const pkgJson = opt ? findPackageJson(opt.startDir) : findPackageJson()
+  const pkgJsonDir = opt ? findPackageJson(opt.startDir) : findPackageJson()
   let fileJson
 
-  if (!pkgJson) {
+  if (!pkgJsonDir) {
     throw new Error(
       "Could not find a package.json file. Run 'npm init' to create one."
     )
   }
 
   try {
-    fileJson = JSON.parse(fs.readFileSync(pkgJson, "utf8"))
+    fileJson = JSON.parse(fs.readFileSync(pkgJsonDir, "utf8"))
   } catch (e) {
     const error = new Error(e)
 
     error.messageTemplate = "failed-to-read-json"
     error.messageData = {
-      path: pkgJson,
+      path: pkgJsonDir,
       message: e.message,
     }
     throw error
@@ -87,9 +87,6 @@ function getPkgJson (opt) {
 
   return fileJson
 }
-
-const pkgJsonDir = findPackageJsonDir()
-const pkgJson = getPkgJson()
 
 class Main {
   constructor (options) {
@@ -113,7 +110,7 @@ class Main {
       })
     }
     if (this.options.localFilePath) {
-      url = path.join(pkgJsonDir, this.options.localFilePath)
+      url = path.join(findPackageJsonDir(), this.options.localFilePath)
       if (!isFile(url)) {
         log(chalk.red(`ERR! package.json yapi.localFilePath is not a file. path.resolve: ${url}. `))
         process.exit()
@@ -161,6 +158,9 @@ class Main {
       return result
     }
 
+    /**
+     * 防止多个
+     */
     const symbolSource = {}
     source.forEach((module) => {
       if (module.list.length === 0) return
@@ -246,7 +246,13 @@ class Main {
   }
 }
 
-function run (pkgFieldYapi = pkgJson.yapi) {
+function run (pkgFieldYapi) {
+  const pkgJsonDir = findPackageJsonDir()
+  const pkgJson = getPkgJson()
+
+  pkgFieldYapi = pkgFieldYapi || pkgJson.yapi
+
+  // yapi options 的数据格式化
   const yapiOptionsFormat = function (aYapi) {
     let mode = {}
     if (aYapi.localFilePath) {
