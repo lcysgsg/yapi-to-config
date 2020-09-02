@@ -306,6 +306,30 @@ export default [
     url: "/v1/biz/Valet/Order/driving_done",
   },
 
+  // 【列表】获取用户的卡券列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/15557
+  {
+    funcName: "biz_Market_ProductOrder_query",
+    method: "GET",
+    url: "/v1/biz/Market/ProductOrder/query",
+  },
+
+  // 【核销】用户核销订单
+  // doc: http://192.168.2.18:3000/project/141/interface/api/15563
+  {
+    funcName: "biz_Market_ProductOrderCheck_check",
+    method: "POST",
+    url: "/v1/biz/Market/ProductOrderCheck/check",
+  },
+
+  // 【列表】获取用户某个商品的可核销列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/15575
+  {
+    funcName: "biz_Market_ProductOrder_queryChild",
+    method: "GET",
+    url: "/v1/biz/Market/ProductOrder/queryChild",
+  },
+
   // 【评论-创建】创建旅行社评论接口
   // doc: http://192.168.2.18:3000/project/141/interface/api/9623
   {
@@ -1264,6 +1288,38 @@ export default [
     funcName: "One_VenuePlaceOrder_cancel",
     method: "POST",
     url: "/v1/One/VenuePlaceOrder/cancel",
+  },
+
+  // 【列表】我的预定酒店房型
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16535
+  {
+    funcName: "One_HotelRoomOrder_query",
+    method: "GET",
+    url: "/v1/One/HotelRoomOrder/query",
+  },
+
+  // 【详情】获取酒店房型预订详情
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16541
+  {
+    funcName: "One_HotelRoomOrder_read",
+    method: "GET",
+    url: "/v1/One/HotelRoomOrder/read",
+  },
+
+  // 【新增】新增预定酒店房型
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16547
+  {
+    funcName: "One_HotelRoomOrder_reserve",
+    method: "POST",
+    url: "/v1/One/HotelRoomOrder/reserve",
+  },
+
+  // 【取消】取消预定酒店房型
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16553
+  {
+    funcName: "One_HotelRoomOrder_cancel",
+    method: "POST",
+    url: "/v1/One/HotelRoomOrder/cancel",
   },
 
   /**
