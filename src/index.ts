@@ -7,23 +7,9 @@ const chalk = require("chalk")
 
 const log = console.log
 const { isFile, findPackageJsonDir, getPkgJson } = require("./helper")
-
-interface MainConstructor{
-  new (options: {
-    outputDir: string
-  }): MainInterface
-} 
-interface MainInterface{
-  handleSrouce(): void
-} 
-
 class Main implements MainInterface {
 
-  options: object
-
-  constructor (options: object) {
-    this.options = options
-  }
+  constructor (private options: YapiOptions) { }
 
   /**
  * 主要处理函数
@@ -32,7 +18,7 @@ class Main implements MainInterface {
   handleSrouce () {
   // log(`┗|｀O′|┛ 先清一波旧数据 ${this.options.outputDir}`)
     let url = ""
-    const gen = (source: string) => {
+    const gen = (source: []) => {
       fs.ensureDir(this.options.outputDir, () => {
         fs.writeFile(
         `${this.options.outputDir}/${this.options.fileName}.js`,
@@ -57,7 +43,7 @@ class Main implements MainInterface {
       log(`┗|｀O′|┛ ${url}`)
       axios
         .get(url)
-        .then((res) => {
+        .then((res: any) => {
           // 可参考 ./listMenu.json
           const result = res.data
           const source = result.data
@@ -70,11 +56,18 @@ class Main implements MainInterface {
  * 拼接内容
  * @param {array} list yapi数组
  */
-  generateJsApiContent (source) {
+  generateJsApiContent (source: []) {
   // 生成一段
-    const genrSingleConent = function (list) {
+    interface Item {
+      path: string,
+      title: string,
+      project_id: string,
+      _id: string,
+      method: string,
+    }
+    const genrSingleConent = (list: Item[]) => {
       let result = ""
-      list.forEach((item) => {
+      list.forEach((item: Item) => {
       // 函数名最少由两个词组成， 上不封顶
       // const funcNameWordNum = item.path.split("/").length <= 3 ? -2 : 2
         const funcName = this.reservedWord(this.getPathWords(item.path, 1))
@@ -94,10 +87,24 @@ class Main implements MainInterface {
     /**
      * 防止多个
      */
-    const symbolSource = {}
-    source.forEach((module) => {
+    const symbolSource: { 
+      [fileName: string]: { 
+        name: string,
+        desc: string,
+        list: Item[],
+      } 
+    } = {}
+
+    source.forEach((
+      module: {
+        list: [],
+        name: string,
+        desc: string,
+      }
+    ) => {
       if (module.list.length === 0) return
-      module.list.forEach(item => {
+
+      module.list.forEach((item: Item) => {
         const firstPath = item.path
         const fileName = this.getPathWords(firstPath, "1,2")
         if (symbolSource[fileName]) {
@@ -119,19 +126,19 @@ class Main implements MainInterface {
     for (const fileName in symbolSource) {
       const module = symbolSource[fileName]
 
-      if (module.list.length === 0) return
+      if (module.list.length === 0) return false
       // "/api/Advise/update" => "Advise"
       // const firstPath = module.list[0].path
       // const fileName = getPathWords(firstPath, "1,2")
       fileContent += `
-      /**
-       * ==================================================
-       *  ${module.name}
-       *  ${module.desc}
-       * ==================================================
-       */
-      ${genrSingleConent.call(this, module.list)}
-    `
+        /**
+         * ==================================================
+         *  ${module.name}
+         *  ${module.desc}
+         * ==================================================
+         */
+        ${genrSingleConent(module.list)}
+      `
     }
     fileContent += "]"
     return fileContent
@@ -141,7 +148,7 @@ class Main implements MainInterface {
  * 防止与保留字冲突
  * @param {string} word 单词
  */
-  reservedWord (word) {
+  reservedWord (word: string) {
     switch (word) {
       case "delete":
         return "del"
@@ -158,7 +165,7 @@ class Main implements MainInterface {
  * @param {string|number} sliceIdx 同 Array.prototype.splice(index)
  * @param {string} divider 链接函数名的符号
  */
-  getPathWords (path, sliceIdx, divider = "_") {
+  getPathWords (path: string, sliceIdx: string | number, divider: string = "_") {
   // 如果带域名，就截取后面的路径
     if (isURL(path)) {
       path = path.replace(/.*\/\/.*?\//, "")
@@ -169,30 +176,44 @@ class Main implements MainInterface {
     // 统一成方便处理的模样 v1/Advise/update/ => v1/Advise/update
     path = path[path.length - 1] === "/" ? path.substr(0, path.length - 1) : path
     const arr = path.split("/")
-    let startIndex = sliceIdx
+    let startIndex: number
     let endIndex = arr.length
-    if (isNaN(sliceIdx)) {
-    // 3,4 => startIndex = 3 , endIndex = 4
-      ;[startIndex, endIndex] = sliceIdx.split(",")
+    if (typeof sliceIdx === 'string') {
+      // 3,4 => startIndex = 3 , endIndex = 4
+      const splitRes = sliceIdx.split(",")
+      startIndex = Number(splitRes[0])
+      endIndex = Number(splitRes[1])
+    } else {
+      startIndex = sliceIdx
     }
     return arr.slice(startIndex, endIndex).join(divider)
   }
 }
 
-function run (pkgFieldYapi) {
+function run (pkgFieldYapi: YapiOptions | YapiOptions[]) {
   const pkgJsonDir = findPackageJsonDir()
   const pkgJson = getPkgJson()
 
   pkgFieldYapi = pkgFieldYapi || pkgJson.yapi
 
   // yapi options 的数据格式化
-  const yapiOptionsFormat = function (aYapi) {
-    let mode = {}
+  const yapiOptionsFormat = function (aYapi: YapiOptions): YapiOptions {
+    interface ModeLocal {
+      localFilePath: string
+    }
+    interface ModeApi {
+      host: string
+      token: string
+      path: string
+    }
+
+    let mode: ModeLocal | ModeApi
+
     if (aYapi.localFilePath) {
       mode = {
         // 直接使用数据文件。如果有该字段，会直接使用， 不再请求 yapi 接口。
         // 数据文件地址, 相对于 package.json
-        localFilePath: aYapi.localFilePath || null,
+        localFilePath: aYapi.localFilePath,
       }
     } else {
       mode = {
