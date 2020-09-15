@@ -3,27 +3,6 @@
   "version": "2.3.3",
   "description": "思路就是拿它接口给的数据，拼接出一份自己用的配置",
   "author": "lcysgsg",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lcysgsg/yapi-to-config.git"
-  },
-  "dependencies": {
-    "axios": "^0.19.2",
-    "chalk": "^4.1.0",
-    "fs-extra": "^9.0.1",
-    "prettier": "^2.0.5",
-    "validator": "^13.1.1"
-  },
-  "devDependencies": {
-    "eslint": "^7.8.1",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "jest": "^26.4.2"
-  },
   "main": "index.js",
   "scripts": {
     "test": "jest"
@@ -33,5 +12,29 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "dependencies": {
+    "axios": "^0.19.2",
+    "chalk": "^4.1.0",
+    "fs-extra": "^9.0.1",
+    "prettier": "^2.0.5",
+    "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.1",
+    "@types/jest": "^26.0.13",
+    "@types/validator": "^13.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "eslint": "^7.8.1",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcysgsg/yapi-to-config.git"
+  },
+  "license": "ISC"
 }

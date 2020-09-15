@@ -1,7 +1,7 @@
-const fs = require("fs-extra")
-const path = require("path")
+import fs from "fs-extra"
+import path from "path"
 
-export function isFile(path: string) {
+export function isFile(path: string): boolean {
     return fs.existsSync(path) && fs.statSync(path).isFile()
 }
 
@@ -11,7 +11,7 @@ export function isFile(path: string) {
  * @param   {string} [startDir=process.cwd()] Starting directory
  * @returns {string}                          Absolute path to closest package.json file
  */
-export function findPackageJson(startDir: string = process.cwd()) {
+export function findPackageJson(startDir = process.cwd()): string | null {
     let dir = path.resolve(startDir)
 
     do {
@@ -30,8 +30,8 @@ export function findPackageJson(startDir: string = process.cwd()) {
   * fork from findPackageJson，get package.json dir
   * @returns {string}  Absolute path to closest package.json file dir
   */
-export function findPackageJsonDir(startDir: string) {
-    let dir = path.resolve(startDir || process.cwd())
+export function findPackageJsonDir(startDir = process.cwd()): string {
+    let dir = path.resolve(startDir)
 
     do {
         const pkgFile = path.join(dir, "package.json")
@@ -42,7 +42,7 @@ export function findPackageJsonDir(startDir: string) {
         }
         return dir
     } while (dir !== path.resolve(dir, ".."))
-    return null
+    throw new Error("can not find package.json");
 }
 
 /**
@@ -51,7 +51,7 @@ export function findPackageJsonDir(startDir: string) {
  * @param   {boolean} opt.startdir        Directory to begin searching from
  * @returns {Object}                      A object from package.json
  */
-export function getPkgJson(opt: any) {
+export function getPkgJson(opt?: {[key: string]: string}): { [key: string]: string} {
     const pkgJsonDir = opt ? findPackageJson(opt.startDir) : findPackageJson()
     let fileJson
 

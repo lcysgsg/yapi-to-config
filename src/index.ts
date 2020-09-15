@@ -1,33 +1,33 @@
-const isURL = require("validator/lib/isURL")
-const fs = require("fs-extra")
-const axios = require("axios")
-const path = require("path")
-const prettier = require("prettier")
-const chalk = require("chalk")
+import isURL from "validator/lib/isURL"
+import fs from "fs-extra"
+import axios from "axios"
+import path from "path"
+import prettier from "prettier"
+import chalk from "chalk"
 
+import { isFile, findPackageJsonDir, getPkgJson } from "./helper"
 const log = console.log
-const { isFile, findPackageJsonDir, getPkgJson } = require("./helper")
-class Main implements MainInterface {
 
-  constructor (private options: YapiOptions) { }
+export class Main implements MainInterface {
 
+  constructor(private options: YapiOptions) { }
   /**
  * 主要处理函数
  * @param {array} source yapi源数据
  */
-  handleSrouce () {
-  // log(`┗|｀O′|┛ 先清一波旧数据 ${this.options.outputDir}`)
+  handleSrouce():void {
+    // log(`┗|｀O′|┛ 先清一波旧数据 ${this.options.outputDir}`)
     let url = ""
     const gen = (source: []) => {
-      fs.ensureDir(this.options.outputDir, () => {
+      fs.ensureDir(this.options.outputDir, undefined, () => {
         fs.writeFile(
-        `${this.options.outputDir}/${this.options.fileName}.js`,
-        prettier.format(this.generateJsApiContent(source), { parser: "babel" })
+          `${this.options.outputDir}/${this.options.fileName}.js`,
+          prettier.format(this.generateJsApiContent(source), { parser: "babel" })
         )
         log(`┗|｀O′|┛ 写入 ${path.resolve(this.options.outputDir, this.options.fileName)}.js `)
       })
     }
-    
+
     if (this.options.localFilePath) {
       url = path.join(findPackageJsonDir(), this.options.localFilePath)
       if (!isFile(url)) {
@@ -43,11 +43,11 @@ class Main implements MainInterface {
       log(`┗|｀O′|┛ ${url}`)
       axios
         .get(url)
-        .then((res: any) => {
+        .then((res) => {
           // 可参考 ./listMenu.json
           const result = res.data
           const source = result.data
-          gen( source)
+          gen(source)
         })
     }
   }
@@ -56,20 +56,13 @@ class Main implements MainInterface {
  * 拼接内容
  * @param {array} list yapi数组
  */
-  generateJsApiContent (source: []) {
-  // 生成一段
-    interface Item {
-      path: string,
-      title: string,
-      project_id: string,
-      _id: string,
-      method: string,
-    }
-    const genrSingleConent = (list: Item[]) => {
+  generateJsApiContent(source: []): string {
+
+    const genrSingleConent = (list: YapiListItem[]) => {
       let result = ""
-      list.forEach((item: Item) => {
-      // 函数名最少由两个词组成， 上不封顶
-      // const funcNameWordNum = item.path.split("/").length <= 3 ? -2 : 2
+      list.forEach((item: YapiListItem) => {
+        // 函数名最少由两个词组成， 上不封顶
+        // const funcNameWordNum = item.path.split("/").length <= 3 ? -2 : 2
         const funcName = this.reservedWord(this.getPathWords(item.path, 1))
         result += `
           // ${item.title}
@@ -87,12 +80,12 @@ class Main implements MainInterface {
     /**
      * 防止多个
      */
-    const symbolSource: { 
-      [fileName: string]: { 
+    const symbolSource: {
+      [fileName: string]: {
         name: string,
         desc: string,
-        list: Item[],
-      } 
+        list: YapiListItem[],
+      }
     } = {}
 
     source.forEach((
@@ -104,7 +97,7 @@ class Main implements MainInterface {
     ) => {
       if (module.list.length === 0) return
 
-      module.list.forEach((item: Item) => {
+      module.list.forEach((item: YapiListItem) => {
         const firstPath = item.path
         const fileName = this.getPathWords(firstPath, "1,2")
         if (symbolSource[fileName]) {
@@ -126,7 +119,7 @@ class Main implements MainInterface {
     for (const fileName in symbolSource) {
       const module = symbolSource[fileName]
 
-      if (module.list.length === 0) return false
+      if (module.list.length === 0) break
       // "/api/Advise/update" => "Advise"
       // const firstPath = module.list[0].path
       // const fileName = getPathWords(firstPath, "1,2")
@@ -148,7 +141,7 @@ class Main implements MainInterface {
  * 防止与保留字冲突
  * @param {string} word 单词
  */
-  reservedWord (word: string) {
+  reservedWord(word: string): string {
     switch (word) {
       case "delete":
         return "del"
@@ -165,8 +158,8 @@ class Main implements MainInterface {
  * @param {string|number} sliceIdx 同 Array.prototype.splice(index)
  * @param {string} divider 链接函数名的符号
  */
-  getPathWords (path: string, sliceIdx: string | number, divider: string = "_") {
-  // 如果带域名，就截取后面的路径
+  getPathWords(path: string, sliceIdx: string | number, divider = "_"): string {
+    // 如果带域名，就截取后面的路径
     if (isURL(path)) {
       path = path.replace(/.*\/\/.*?\//, "")
     }
@@ -178,7 +171,7 @@ class Main implements MainInterface {
     const arr = path.split("/")
     let startIndex: number
     let endIndex = arr.length
-    if (typeof sliceIdx === 'string') {
+    if (typeof sliceIdx === "string") {
       // 3,4 => startIndex = 3 , endIndex = 4
       const splitRes = sliceIdx.split(",")
       startIndex = Number(splitRes[0])
@@ -190,7 +183,7 @@ class Main implements MainInterface {
   }
 }
 
-function run (pkgFieldYapi: YapiOptions | YapiOptions[]) {
+export function run(pkgFieldYapi: YapiOptions | YapiOptions[]): void {
   const pkgJsonDir = findPackageJsonDir()
   const pkgJson = getPkgJson()
 
@@ -219,12 +212,13 @@ function run (pkgFieldYapi: YapiOptions | YapiOptions[]) {
       mode = {
         // host 是 yapi 的地址
         host: (function () {
-          if (!isURL(String(aYapi.host))) {
+          const host = String(aYapi.host)
+          if (!isURL(host)) {
             log(chalk.red(`YAPI ERR! package.json invalid host：${aYapi.host}`))
             log(chalk.red(`${JSON.stringify(aYapi, null, 2)} `))
             process.exit()
           }
-          return aYapi.host
+          return host
         }()),
 
         // 获取新项目接口一般就是改 token，
@@ -265,6 +259,3 @@ function run (pkgFieldYapi: YapiOptions | YapiOptions[]) {
     r.handleSrouce()
   }
 }
-
-exports.Main = Main
-exports.run = run
