@@ -306,6 +306,30 @@ export default [
     url: "/v1/biz/Valet/Order/driving_done",
   },
 
+  // 【列表】获取用户的卡券列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/15557
+  {
+    funcName: "biz_Market_ProductOrder_query",
+    method: "GET",
+    url: "/v1/biz/Market/ProductOrder/query",
+  },
+
+  // 【核销】用户核销订单
+  // doc: http://192.168.2.18:3000/project/141/interface/api/15563
+  {
+    funcName: "biz_Market_ProductOrderCheck_check",
+    method: "POST",
+    url: "/v1/biz/Market/ProductOrderCheck/check",
+  },
+
+  // 【列表】获取用户某个商品的可核销列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/15575
+  {
+    funcName: "biz_Market_ProductOrder_queryChild",
+    method: "GET",
+    url: "/v1/biz/Market/ProductOrder/queryChild",
+  },
+
   // 【评论-创建】创建旅行社评论接口
   // doc: http://192.168.2.18:3000/project/141/interface/api/9623
   {
@@ -757,6 +781,165 @@ export default [
     funcName: "Market_ProductOrder_pay",
     method: "POST",
     url: "/v1/Market/ProductOrder/pay",
+  },
+
+  /**
+   * ==================================================
+   *  借阅无忧-以书会友
+   *  借阅无忧-以书会友
+   * ==================================================
+   */
+
+  // 【列表】获取好友列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17849
+  {
+    funcName: "Chat_Friend_query",
+    method: "GET",
+    url: "/v1/Chat/Friend/query",
+  },
+
+  // 【详情】获取好友详情
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17855
+  {
+    funcName: "Chat_Friend_read",
+    method: "GET",
+    url: "/v1/Chat/Friend/read",
+  },
+
+  // 【删除】删除好友
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17861
+  {
+    funcName: "Chat_Friend_remove",
+    method: "POST",
+    url: "/v1/Chat/Friend/remove",
+  },
+
+  // 【列表】获取我发出的好友申请列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17867
+  {
+    funcName: "Chat_FriendRequest_query_my_request",
+    method: "GET",
+    url: "/v1/Chat/FriendRequest/query_my_request",
+  },
+
+  // 【列表】获取我收到的好友申请列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17873
+  {
+    funcName: "Chat_FriendRequest_query_my_response",
+    method: "GET",
+    url: "/v1/Chat/FriendRequest/query_my_response",
+  },
+
+  // 【更改】处理好友请求
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17879
+  {
+    funcName: "Chat_FriendRequest_dealRequest",
+    method: "POST",
+    url: "/v1/Chat/FriendRequest/dealRequest",
+  },
+
+  // 【新增】好友请求
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17885
+  {
+    funcName: "Chat_FriendRequest_sendRequest",
+    method: "POST",
+    url: "/v1/Chat/FriendRequest/sendRequest",
+  },
+
+  // 【删除】删除好友请求
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17891
+  {
+    funcName: "Chat_FriendRequest_cancelRequest",
+    method: "POST",
+    url: "/v1/Chat/FriendRequest/cancelRequest",
+  },
+
+  // 【列表】查看加入的群组
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17897
+  {
+    funcName: "Chat_Group_query",
+    method: "GET",
+    url: "/v1/Chat/Group/query",
+  },
+
+  // 【详情】获取群组详情
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17903
+  {
+    funcName: "Chat_Group_read",
+    method: "GET",
+    url: "/v1/Chat/Group/read",
+  },
+
+  // 【新增】创建群聊
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17909
+  {
+    funcName: "Chat_Group_create_group",
+    method: "POST",
+    url: "/v1/Chat/Group/create_group",
+  },
+
+  // 【删除】解散群聊
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17915
+  {
+    funcName: "Chat_Group_dissolve",
+    method: "POST",
+    url: "/v1/Chat/Group/dissolve",
+  },
+
+  // 【新增】加入群聊
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17921
+  {
+    funcName: "Chat_GroupUser_join",
+    method: "POST",
+    url: "/v1/Chat/GroupUser/join",
+  },
+
+  // 【删除】退出群聊
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17927
+  {
+    funcName: "Chat_GroupUser_leave",
+    method: "POST",
+    url: "/v1/Chat/GroupUser/leave",
+  },
+
+  // 【列表】查看聊天记录
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17933
+  {
+    funcName: "Chat_Log_query",
+    method: "GET",
+    url: "/v1/Chat/Log/query",
+  },
+
+  // 【新增】发送聊天
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17939
+  {
+    funcName: "Chat_Log_push",
+    method: "POST",
+    url: "/v1/Chat/Log/push",
+  },
+
+  // 【删除】撤回聊天
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17945
+  {
+    funcName: "Chat_Log_withdraw",
+    method: "POST",
+    url: "/v1/Chat/Log/withdraw",
+  },
+
+  // 【列表】查看消息列表
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17951
+  {
+    funcName: "Chat_Message_query",
+    method: "GET",
+    url: "/v1/Chat/Message/query",
+  },
+
+  // 【删除】删除消息
+  // doc: http://192.168.2.18:3000/project/141/interface/api/17957
+  {
+    funcName: "Chat_Message_remove",
+    method: "POST",
+    url: "/v1/Chat/Message/remove",
   },
 
   /**
@@ -1264,6 +1447,77 @@ export default [
     funcName: "One_VenuePlaceOrder_cancel",
     method: "POST",
     url: "/v1/One/VenuePlaceOrder/cancel",
+  },
+
+  // 【列表】我的预定酒店房型
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16535
+  {
+    funcName: "One_HotelRoomOrder_query",
+    method: "GET",
+    url: "/v1/One/HotelRoomOrder/query",
+  },
+
+  // 【详情】获取酒店房型预订详情
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16541
+  {
+    funcName: "One_HotelRoomOrder_read",
+    method: "GET",
+    url: "/v1/One/HotelRoomOrder/read",
+  },
+
+  // 【新增】新增预定酒店房型
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16547
+  {
+    funcName: "One_HotelRoomOrder_reserve",
+    method: "POST",
+    url: "/v1/One/HotelRoomOrder/reserve",
+  },
+
+  // 【取消】取消预定酒店房型
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16553
+  {
+    funcName: "One_HotelRoomOrder_cancel",
+    method: "POST",
+    url: "/v1/One/HotelRoomOrder/cancel",
+  },
+
+  /**
+   * ==================================================
+   *  一图一码
+   *  一图一码
+   * ==================================================
+   */
+
+  // 【订单-确认】生成酒店入住订单让用户确认
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16595
+  {
+    funcName: "Hotel_HotelOrder_confirm",
+    method: "POST",
+    url: "/v1/Hotel/HotelOrder/confirm",
+  },
+
+  // 【订单-提交】用户提交订单
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16601
+  {
+    funcName: "Hotel_HotelOrder_commit",
+    method: "POST",
+    url: "/v1/Hotel/HotelOrder/commit",
+  },
+
+  // 【订单-详情】查看订单详情
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16607
+  {
+    funcName: "Hotel_HotelOrder_detail",
+    method: "GET",
+    url: "/v1/Hotel/HotelOrder/detail",
+  },
+
+  // 【订单】x支付订单
+  // doc: http://192.168.2.18:3000/project/141/interface/api/16613
+  {
+    funcName: "Hotel_HotelOrder_pay",
+    method: "POST",
+    url: "/v1/Hotel/HotelOrder/pay",
   },
 
   /**
