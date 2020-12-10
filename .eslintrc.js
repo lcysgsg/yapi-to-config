@@ -32,5 +32,21 @@ module.exports = {
         functions: "never",
       },
     ],
+    "@typescript-eslint/no-this-alias": [
+      "error",
+      {
+        "allowDestructuring": true, // Allow `const { props, state } = this`; false by default
+        "allowedNames": ["self"], // Allow `const self = this`; `[]` by default
+      },
+    ],
   },
+  overrides: [
+    {
+      // js 文件会被 lint 提示
+      files: ["*.js"],
+      rules: {
+        "@typescript-eslint/no-var-requires": "off",
+      },
+    },
+  ],
 }

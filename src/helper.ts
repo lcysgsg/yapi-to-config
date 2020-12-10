@@ -51,7 +51,7 @@ export function findPackageJsonDir(startDir = process.cwd()): string {
  * @param   {boolean} opt.startdir        Directory to begin searching from
  * @returns {Object}                      A object from package.json
  */
-export function getPkgJson(opt?: {[key: string]: string}): { [key: string]: string} {
+export function getPkgJson(opt?: { [key: string]: string }): { [key: string]: string } {
     const pkgJsonDir = opt ? findPackageJson(opt.startDir) : findPackageJson()
     let fileJson
 
@@ -65,12 +65,6 @@ export function getPkgJson(opt?: {[key: string]: string}): { [key: string]: stri
         fileJson = JSON.parse(fs.readFileSync(pkgJsonDir, "utf8"))
     } catch (e) {
         const error = new Error(e)
-
-        error.messageTemplate = "failed-to-read-json"
-        error.messageData = {
-            path: pkgJsonDir,
-            message: e.message,
-        }
         throw error
     }
 

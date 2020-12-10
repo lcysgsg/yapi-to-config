@@ -3,15 +3,17 @@
   "version": "2.3.3",
   "description": "思路就是拿它接口给的数据，拼接出一份自己用的配置",
   "author": "lcysgsg",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc --version && tsc --project \"./\"",
     "test": "jest"
   },
   "bin": {
     "yapi": "bin/index.js"
   },
   "files": [
-    "index.js"
+    "dist/*",
+    "bin/"
   ],
   "dependencies": {
     "axios": "^0.19.2",

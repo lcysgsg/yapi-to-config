@@ -8,6 +8,30 @@ import chalk from "chalk"
 import { isFile, findPackageJsonDir, getPkgJson } from "./helper"
 const log = console.log
 
+
+
+export interface MainInterface {
+  handleSrouce(): void
+  generateJsApiContent(source: []): string | false
+}
+
+export interface YapiOptions {
+  outputDir: string;
+  fileName: string;
+  localFilePath?: string;
+  host?: string;
+  token?: string;
+  path?: string;
+}
+
+export interface YapiListItem {
+  path: string,
+  title: string,
+  project_id: string,
+  _id: string,
+  method: string,
+}
+
 export class Main implements MainInterface {
 
   constructor(private options: YapiOptions) { }
@@ -15,7 +39,7 @@ export class Main implements MainInterface {
  * 主要处理函数
  * @param {array} source yapi源数据
  */
-  handleSrouce():void {
+  handleSrouce(): void {
     // log(`┗|｀O′|┛ 先清一波旧数据 ${this.options.outputDir}`)
     let url = ""
     const gen = (source: []) => {
