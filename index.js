@@ -1,9 +1,9 @@
-const validator = require("validator")
-const fs = require("fs-extra")
-const axios = require("axios")
-const path = require("path")
-const prettier = require("prettier")
-const chalk = require("chalk")
+import validator from require("validator")
+import fs from require("fs-extra")
+import axios from require("axios")
+import path from require("path")
+import prettier from require("prettier")
+import chalk from require("chalk")
 const log = console.log
 
 function isFile (path) {
@@ -240,7 +240,7 @@ class Main {
     let endIndex = arr.length
     if (isNaN(sliceIdx)) {
     // 3,4 => startIndex = 3 , endIndex = 4
-      ;[startIndex, endIndex] = sliceIdx.split(",")
+      [startIndex, endIndex] = sliceIdx.split(",")
     }
     return arr.slice(startIndex, endIndex).join(divider)
   }
