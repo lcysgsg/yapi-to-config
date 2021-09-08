@@ -1,4 +1,8 @@
-# yapi-to-config
+# DEPRECATED
+
+限制在yapi上了。所以现在转向更通用的 OPENAPI 规范 [openapi-gen](https://github.com/lcysgsg/openapi-gen)
+
+## yapi-to-config
 
 利用 _yapi_ 提供的接口，生成一份 _.js_ 导出一个数组。
 
